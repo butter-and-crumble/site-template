@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	  {.if template.mobileStylesEnabled}
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  {.end}
+		{squarespace-headers}
+
+	</head>
+	{.if template.mobileStylesEnabled}{.or}<!-- Mobile Styles Disabled -->{.end}
+	<body class="{squarespace.page-classes}" id="{squarespace.page-id}">
+
+	<div id="site">
+		<div id="canvas">
+
+			<div id="headerWrapper">
+				<header id="header">
+
+					<div id="headerInfo">
+						{.section website}
+						<h1 class="logo{.section logoImageUrl} image{.or} site-title{.end}">
+							<a href="/" title="{siteTitle}" role="bookmark" data-content-field="site-title">
+							  {.if logoImageUrl}<span class="placed-logo-image"><img src="{logoImageUrl}?format=1500w" alt="{siteTitle}" /></span>
+							  {.or}<span class="placed-site-title">{siteTitle}</span>{.end}
+							</a>
+						</h1>
+						{.section siteTagLine}<p class="site-tagline" data-content-field="site-tagline">{@}</p>{.end}
+		      	<script>
+			        Y.use('squarespace-ui-base', function(Y) {
+			          	Y.one("h1.logo").plug(Y.Squarespace.TextShrink, {
+			            	parentEl: Y.one('#header'),
+			            	minFontSize: 16
+			          	});
+			          	if (Y.one('p.site-tagline')){
+				          	Y.one("p.site-tagline").plug(Y.Squarespace.TextShrink, {
+				            	parentEl: Y.one('#header'),
+				            	minFontSize: 12
+				          	});
+				          }
+			        });
+		      	</script>
+						{.section siteDescription}
+						<div class="site-description" data-content-field="site-description">{@}</div>
+						{.end}
+						{.end}
+						<div id="navBlock" role="navigation">
+							<squarespace:navigation navigationId="mainNav" template="main-navigation" />
+					  </div>
+
+						<!-- CATEGORY NAV -->
+						{.section collection}{.equal? typeName "products"}{.section categories}
+						<div id="categoryNav" role="navigation">
+						  <input type="checkbox" name="category-nav-toggle" id="categoryNavToggle" class="category-nav-toggle hidden" />
+						  <label for="categoryNavToggle" class="category-nav-toggle-label" onclick></label>
+						  <nav class="category-nav">
+						    <ul class="nav category-nav-links">
+						      <li class="filter"><a>Filter{.if categoryFilter}: {categoryFilter}{.end}</a></li>
+						      <li{.if categoryFilter}{.or} class="active-link all"{.end}><a href="{fullUrl}">All</a></li>
+						    {.repeated section @}
+						      <li{.equal? categoryFilter @} class="active-link"{.end}><a href="{fullUrl}?category={@|url-encode}">{@}</a></li>
+						    {.end}
+						    </ul>
+						  </nav>
+						</div>
+						{.end}{.end}{.end}
+
+					</div>
+
+				</header>
+			</div><!-- / headerWrapper -->
+
+			<div id="pageWrapper" class="hfeed" role="main">
+				<section id="page" data-content-field="main-content">
+					{squarespace.main-content}
+				</section>
+			</div><!-- / pageWrapper -->
+
+			<div id="footerWrapper">
+				<footer id="footer">
+			   {.section website}
+					  {.if socialAccounts}
+					    <div id="sqs-social" class="social-links sqs-svg-icon--list" data-content-field="connected-accounts">
+					      {@|apply sqs-social-links}
+					    </div>
+					  {.end}
+					{.end}
+					<squarespace:block-field id="footerBlock" columns="12" label="Footer Content" />
+				</footer>
+			</div><!-- / footerWrapper -->
+
+		</div><!-- / canvas -->
+	</div><!-- / site -->
+
+	{squarespace-footers}
+	<squarespace:script src="site.js" combo="true" />
+
+	{.if template.mobileStylesEnabled}{.or}
+	  <script>
+	    Y.use('node', function() {
+	      Y.on('domready', function() {
+	        var move;
+	        Y.all('.subnav a').each(function(a) {
+	          a.on('touchstart', function() {
+	            move = false;
+	          });
+	          a.on('touchmove', function() {
+	            move = true;
+	          });
+	          a.on('touchend', function() {
+	            if (move === false) {
+	              window.location = a.getAttribute('href');
+	            }
+	          });
+	        });
+	      });
+	    });
+	  </script>
+	{.end}
+
+	</body>
+</html>

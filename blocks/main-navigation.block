@@ -1,0 +1,67 @@
+{.section items}
+<nav class="main-nav" data-content-field="navigation">
+
+  <ul>
+  {.repeated section @}
+    {.folder?}
+      <li class="{collection.typeLabel}-collection{.section active} active-link{.end}{.if collection.folder} folder{.end}">
+        <a aria-haspopup="true" href="#" onClick="return false;" class="{.if folderActive}active-folder{.end}">{collection.navigationTitle}</a>
+        <div class="subnav">
+          <ul>
+            {.repeated section items}
+              {.collection?}
+                <li class="{collection.typeLabel}-collection{.section active} active-link{.end}">
+                  <a href="{collection.fullUrl}">{collection.navigationTitle}</a>
+                </li>
+              {.end}
+              {.section externalLink}
+                <li class="external-link">
+                  <a href="{url}"{.section newWindow} target="_blank"{.end}>{title}</a>
+                </li>
+              {.end}
+            {.end}
+          </ul>
+        </div>
+      </li>
+    {.or}
+      {.if collection}
+        <li class="{collection.typeLabel}-collection{.section active} active-link{.end}">
+          <a href="{collection.fullUrl}">{collection.navigationTitle}</a>
+        </li>
+      {.end}
+      {.section externalLink}
+        <li class="external-link">
+          <a href="{url}"{.section newWindow} target="_blank"{.end}>{title}</a>
+        </li>
+      {.end}
+    {.end}
+  {.end}
+  </ul>
+
+  <select id="mobileSelect" name="mobileSelect">
+    <option class="mobile-select-label" value="">Navigation</option>
+    {.repeated section @}
+      {.folder?}
+        <optgroup label="{collection.navigationTitle}" >{collection.navigationTitle}
+        {.repeated section items}
+          {.collection?}
+            <option class="{collection.typeLabel}-collection" value="{collection.fullUrl}"{.section active} selected="selected"{.end}>{collection.navigationTitle}</option>
+          {.end}
+          {.section externalLink}
+            <option class="external-link" value="{url}">{title}</option>
+          {.end}
+        {.end}
+        </optgroup>
+      {.or}
+        {.if collection}
+          <option class="{collection.typeLabel}-collection" value="{collection.fullUrl}"{.section active} selected="selected"{.end}>{collection.navigationTitle}</option>
+        {.end}
+        {.section externalLink}
+          <option class="external-link" value="{url}">{title}</option>
+        {.end}
+      {.end}
+    {.end}
+  </select>
+
+</nav>
+{.end}

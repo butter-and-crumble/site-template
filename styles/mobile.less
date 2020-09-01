@@ -1,0 +1,218 @@
+
+/* MOBILE MEDIA QUERIES
+**********************************************/
+
+@media only screen and (max-width: 960px) {
+
+  .special-content {
+
+    margin-left: -50px;
+    margin-right: -50px;
+    width: auto !important;
+    margin-bottom: 30px;
+
+    [class*=sqs-col] .sqs-block { padding-left: 0; padding-right: 0; }
+
+    .image-caption-wrapper{
+      padding: 0 20px;
+    }
+  }
+
+  #site { overflow: hidden; padding: 50px; }
+
+  .collection-type-blog {
+
+    .promoted-block-quote .special-content { margin-right: 0; margin-left: 0; }
+    .promoted-block-quote .special-content .quote-block figure { margin: 0; padding: 0; }
+
+  }
+
+}
+
+
+// Mobile or Tab
+
+@media only screen and (max-width: 640px) {
+
+  #page { margin-top: 0px; }
+
+  .special-content {
+    margin-left: -30px;
+    margin-right: -30px;
+    width: auto !important;
+    margin-bottom: 30px;
+  }
+
+  #site {
+    padding: 30px;
+  }
+
+  #header h1.logo.image .placed-logo-image img { max-width: 100%; height: auto; }
+  /*#header .site-tagline { padding-left: 0; }*/
+
+  #headerWrapper { margin: 0 20px; }
+
+  #navBlock nav,
+  #categoryNav nav { border-width: 0; }
+
+  .collection-type-blog {
+
+    article { padding: 0 0 4em; }
+    article figure.main-image { display: none; }
+    article .entry-title,
+    &.blog-meta-data-split article .article-meta-top { margin-bottom: 0.5em; }
+    .comment-list { margin-left: 0; padding-top: auto; }
+
+    .promoted-block-quote .special-content .quote-block blockquote { font-size: 1.5em; }
+
+  }
+
+  // collapse sqs layouts
+  @import 'sqs-grid-breaker';
+  @import 'sqs-ui-font';
+
+  #navBlock nav,
+  #categoryNav nav {
+    padding: 0.25em 0.5em 0.33em  !important;
+    border-width: 1px;
+  }
+
+  nav.main-nav ul { display: none; }
+  nav.main-nav select {
+    .nav-font;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1em;
+  }
+
+  nav.main-nav {
+
+    border-color: @bordersColor;
+    border-style: solid;
+    .sqs-ui-font(down-arrow);
+    position: relative;
+    z-index: 100;
+
+    &:before {
+      position: absolute;
+      top: 50%;
+      right: 0.5em;
+      margin-top: -0.45em;
+    }
+
+    select {
+      font-size: @navFontSize;
+      color: @navLinkActiveColor;
+      margin: 0;
+      width: 100%;
+      border: solid 0px transparent;
+      background-color: transparent;
+      -webkit-border-radius: 0;
+      border-radius: 0;
+      text-indent: 0.1px;
+      text-overflow: '';
+      outline: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      position: relative;
+      z-index: 1;
+    }
+
+    select::-moz-focus-inner {
+      border: 0; /* kills border on use */
+    }
+    select::-ms-expand {
+      display: none; /* hides select dropdown arrow on windows phone */
+    }
+    select optgroup {
+      z-index: 101;
+    }
+
+  }
+
+  /* CATEGORY NAV MOBILE
+  ----------------------------------------------*/
+
+  .category-nav-toggle-label {
+    display: block;
+    visibility: visible;
+    width: 100%;
+    z-index: 2;
+    position: absolute;
+    top: 0.5em;
+    right: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1.8em;
+    text-align: left;
+    &:after {
+      font-size: 20px;
+      content: "+";
+      display: block;
+      text-align: right;
+    }
+  }
+
+  #categoryNav {
+    position: relative;
+    background-color: rgba(150, 150, 150, 0.1);
+    nav ul {
+      text-align: left;
+      margin: 0px 10% 0 0;
+      line-height: 1.8em;
+      li {
+        margin: 0;
+        padding-right: 0 !important;
+        display: none;
+        &.filter {
+          display: block;
+          visibility: visible;
+        }
+      }
+      li a {
+        display: block;
+      }
+    }
+  }
+
+  #categoryNav #categoryNavToggle:checked {
+    + .category-nav-toggle-label {
+      z-index: 0;
+      &:after {
+        content: '–';
+      }
+    }
+    ~ .category-nav {
+      ul {
+        z-index: 2;
+        li:not(.filter) {
+          display: block;
+        }
+      }
+    }
+  }
+
+}
+
+
+// iPhone horizontal and smaller
+
+@media only screen and (max-width: 480px) {
+
+  .special-content {
+    margin-left: -20px;
+    margin-right: -20px;
+    width: auto !important;
+    margin-bottom: 30px !important;
+  }
+
+  #site {
+    padding: 20px !important;
+  }
+
+
+	.collection-type-blog .comment-sort { display: none; }
+
+}
+

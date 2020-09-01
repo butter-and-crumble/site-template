@@ -1,0 +1,84 @@
+{.section item}
+
+  <article class="{@|item-classes}" id="article-{id}" data-item-id="{id}">
+
+	<div class="content-wrapper">
+  <!--SPECIAL CONTENT-->
+
+    {.section promotedBlock}
+    <div class="special-content">
+      {@}
+    </div>
+    {.end}
+
+    <div class="post">
+
+    <!--POST HEADER-->
+
+			<header>
+				{.if title}<h1 class="entry-title" data-content-field="title" itemprop="headline">{.passthrough?}<a href="{sourceUrl}">{title} <span>&rarr;</span></a>{.or}<a href="{fullUrl}">{title}</a>{.end}</h1>{.end}
+				<div class="article-meta-top">
+          {.section location}<div class="location">{.if addressTitle}<a href="//maps.google.com/maps?q={mapLat},{mapLng}" target="_blank" title="View map in new window"><i class="icon-map-marker"></i>{addressTitle}</a>{.end}</div>{.end}
+          <span class="date"><a href="{fullUrl}"><time class="published" datetime="{addedOn|date %F}" itemprop="datePublished">{addedOn|date %B %d, %Y}</time></a></span>
+           {.section author}<span class="author"><a href="{collection.fullUrl}?author={id}" rel="author">by {displayName}</a></span>{.end}
+          {.section categories}<span class="categories">in {.repeated section @}<a href="/{collection.urlId}/category/{@|url-encode}" rel="tag">{@}</a>{.alternates with}, {.end}</span>{.end}
+        </div>
+			</header>
+
+    <!--POST BODY-->
+
+      {.section body}<div class="body entry-content">{@}</div>{.end}
+
+    <!--POST FOOTER-->
+
+      <footer class="article-meta">
+
+      	<span class="date"><a href="{fullUrl}"><i class="icon-calendar"></i><time class="published" datetime="{addedOn|date %F}" itemprop="datePublished">{addedOn|date %B %d, %Y}</time></a></span>
+        {.section author}<span class="author"><span class="delimiter">/</span><a href="{collection.fullUrl}?author={id}" rel="author"><i class="icon-user"></i>{displayName}</a></span>{.end}
+        {.passthrough?}{.or}{.section sourceUrl}<span class="source"><span class="delimiter">/</span><a href="{sourceUrl}" target="_blank"><i class="icon-share"></i>Source</a></span>{.end}{.end}
+        {.section tags}<div class="tags"><i class="icon-tag"></i>{.repeated section @}<a href="/{collection.urlId}/tag/{@|url-encode}" rel="tag">{@}</a>{.alternates with}, {.end}</div>{.end}
+        {.section categories}<div class="categories"><i class="icon-bookmark"></i>{.repeated section @}<a href="/{collection.urlId}/category/{@|url-encode}" rel="tag">{@}</a>{.alternates with}, {.end}</div>{.end}
+
+        <div class="shareLoveButtons">
+          {@|like-button}
+          {@|social-button-inline}
+        </div>
+
+        {postItemInjectCode}
+
+      </footer>
+
+    </div><!-- /post -->
+
+  </div><!-- /content-wrapper -->
+  </article>
+
+
+{.end}
+
+<!--PAGINATION-->
+
+{.section pagination}
+<nav class="item pagination">
+  <div class="content-wrapper">
+    <ul>
+      {.section prevItem}<li class="prev"><a href="{fullUrl}" title="{title}" id="prevLink"><i class="icon-chevron-left"></i>Newer</a></li>
+      {.or}<li class="prev"><span title="Viewing the latest post"><i class="icon-chevron-left"></i>Newer</span></li>{.end}
+      {.section nextItem}<li class="next"><a href="{fullUrl}" title="{title}" id="nextLink">Older<i class="icon-chevron-right"></i></a></li>
+      {.or}<li class="next"><span title="Viewing the oldest post">Older<i class="icon-chevron-right"></i></span></li>{.end}
+    </ul>
+  </div>
+</nav>
+{.end}
+
+<!--COMMENTS-->
+
+{.section item}
+  {.comments?}
+  <div class="content-wrapper">
+    <section id="comments-{id}" class="comments-wrapper">
+      {@|comments}
+    </section>
+  </div>
+  {.end}
+{.end}

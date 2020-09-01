@@ -1,0 +1,277 @@
+
+/* cache busting xx */
+/* Native Tweak Options */
+
+/* General */
+
+// tweak: { "category" : "General", "type" : "color", "title" : "Site Background", "target" : "#site" }
+@bgColor: #FFFFFF;
+
+// tweak: { "category" : "General", "type" : "image", "title" : "Site Background Image", "target" : "#site" }
+.bg-image {
+  background-image: none;
+  background-position: top left;
+  background-size: auto;
+  background-attachment: scroll;
+  background-repeat: repeat;
+}
+
+// tweak: { "category" : "General", "type" : "value", "title" : "Site Outer Padding", "min" : 0, "max" : 200, "target" : "#site", "property" : "padding" }
+@siteOuterPadding: 50px;
+
+// tweak: { "category" : "General", "type" : "value", "title" : "Site Width", "min" : 480, "max" : 1280, "target" : ".hentry, #canvas", "property" : "width" }
+@siteWidth: 1280px;
+
+// tweak: { "category" : "General", "type" : "color", "title" : "Borders Color", "target" : ".hentry, #header, #footerWrapper" }
+@bordersColor: #E6E6E6;
+
+
+/* Site Header */
+
+// tweak: { "category" : "Site Header", "type" : "font", "title" : "Site Title", "target" : "h1.site-title", "showOnlyWhenPresent" : "h1.site-title" }
+.site-title-font {
+  font-family: Cabin, Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  line-height: 1.4em;
+}
+
+// tweak: { "category" : "Site Header", "type" : "value", "title" : "Site Title Size", "min" : 8, "max" : 72, "target" : "h1.site-title", "showOnlyWhenPresent" : "h1.site-title" }
+@siteTitleSize: 40px;
+
+// tweak: { "category" : "Site Header", "type" : "color", "title" : "Site Title Color", "target" : "#header, h1.site-title", "showOnlyWhenPresent" : "h1.site-title" }
+@siteTitleColor: #121212;
+
+// tweak: { "category" : "Site Header", "type" : "value", "title" : "Site Title Spacing", "min" : 0, "max" : 72, "target" : "h1.site-title", "showOnlyWhenPresent" : "h1.site-title" }
+@siteTitleSpacing: 28px;
+
+// tweak: { "category" : "Site Header", "type" : "font", "title" : "Site Tag Line", "target" : ".site-tagline", "showOnlyWhenPresent" : ".site-tagline" }
+.tagline-font {
+  font-family: Cabin, Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  letter-spacing: 0px;
+  text-transform: uppercase;
+  line-height: 1.8em;
+}
+
+// tweak: { "category" : "Site Header", "type" : "value", "title" : "Site Tag Line Size", "min" : 8, "max" : 72, "target" : ".site-tagline", "showOnlyWhenPresent" : ".site-tagline" }
+@taglineSize: 14px;
+
+// tweak: { "category" : "Site Header", "type" : "color", "title" : "Site Tag Line Color", "target" : ".site-tagline", "showOnlyWhenPresent" : ".site-tagline" }
+@taglineColor: #777777;
+
+// tweak: { "category" : "Site Header", "type" : "value", "title" : "Site Tag Line Spacing", "min" : 0, "max" : 72, "target" : ".site-tagline", "showOnlyWhenPresent" : ".site-tagline" }
+@siteTaglineSpacing: 28px;
+
+// tweak: { "category" : "Site Header", "type" : "font", "title" : "Description", "target" : ".site-description", "showOnlyWhenPresent" : ".site-description", "loadAllVariants" : "true" }
+.site-desc-font {
+  font-family: Cabin, Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  letter-spacing: 0px;
+  line-height: 1.8em;
+  text-transform: none;
+}
+
+// tweak: { "category" : "Site Header", "type" : "value", "title" : "Description Size", "min" : 8, "max" : 72, "target" : ".site-description", "showOnlyWhenPresent" : ".site-description" }
+@siteDescSize: 12px;
+
+// tweak: { "category" : "Site Header", "type" : "color", "title" : "Site Description Color", "target" : ".site-description", "showOnlyWhenPresent" : ".site-description" }
+@siteDescColor: #CFCFCF;
+
+// tweak: { "category" : "Site Header", "type" : "value", "title" : "Logo Width", "min" : 50, "max" : 1280, "target" : "h1.logo img", "showOnlyWhenPresent" : "h1.logo" }
+@logoWidth: 100px;
+
+// tweak: { "category" : "Site Header", "type" : "value", "title" : "Header Spacing", "min" : 0, "max" : 200, "target" : "#header", "property" : "padding-bottom" }
+@headerSpacing: 50px;
+
+
+/* Site Navigation */
+
+// tweak: { "category" : "Site Navigation", "type" : "font", "title" : "Navigation", "target" : ".main-nav > ul > li" }
+.nav-font {
+  font-family: Cabin, Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0px;
+}
+
+// tweak: { "category" : "Site Navigation", "type" : "value", "title" : "Navigation Size", "min" : 8, "max" : 72, "target" : ".main-nav > ul > li" }
+@navFontSize: 14px;
+
+// tweak: { "category" : "Site Navigation", "type" : "color", "title" : "Navigation Link Color", "target" : ".main-nav > ul > li" }
+@navLinkColor: #CFCFCF;
+
+// tweak: { "category" : "Site Navigation", "type" : "color", "title" : "Navigation Active Link Color", "target" : ".main-nav > ul > li" }
+@navLinkActiveColor: #000000;
+
+
+/* Main Content */
+
+// tweak: { "category" : "Main Content", "type" : "font", "title" : "Headings", "target" : "h1:not(.site-title), #pageWrapper h2, #pageWrapper h3", "loadAllVariants" : "true" }
+.titles-font {
+  font-family: Cabin, Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  line-height: 1.8em;
+}
+
+// tweak: { "category" : "Main Content", "type" : "value", "title" : "Headings Size", "min" : 8, "max" : 72, "target" : "h1:not(.site-title), #pageWrapper h2, #pageWrapper h3" }
+@titlesSize: 22px;
+
+// tweak: { "category" : "Main Content", "type" : "color", "title" : "Headings Color", "target" : "h1:not(.site-title), #pageWrapper h2, #pageWrapper h3, .hentry" }
+@headingsColor: #121212;
+
+// tweak: { "category" : "Main Content", "type" : "font", "title" : "Body Text", "target" : "#pageWrapper", "loadAllVariants" : "true" }
+.body-font {
+  font-family: Cabin, Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1.8em;
+  letter-spacing: 0px;
+}
+
+// tweak: { "category" : "Main Content", "type" : "value", "title" : "Body Text Size", "min" : 8, "max" : 72, "target" : "#pageWrapper" }
+@baseFontSize: 14px;
+
+// tweak: { "category" : "Main Content", "type" : "color", "title" : "Body Text Color", "target" : "#pageWrapper" }
+@textColor: #777777;
+
+// tweak: { "category" : "Main Content", "type" : "color", "title" : "Body Link Color", "target" : "#pageWrapper" }
+@bodyLinkColor: #121212;
+
+// tweak: { "category" : "Main Content", "type" : "color", "title" : "Body Link Hover Color", "target" : "#pageWrapper" }
+@bodyLinkHoverColor: #595959;
+
+// tweak: { "category" : "Main Content", "type" : "checkbox", "title" : "Underline Body Links", "value" : "false" }
+
+// tweak: { "category" : "Main Content", "type" : "font", "title" : "Quotes", "target" : "blockquote" }
+.quote-font {
+  font-family: "Playfair Display", serif;
+  font-weight: normal;
+  font-style: italic;
+  letter-spacing: 1px;
+  line-height: 1.5em;
+}
+
+// tweak: { "category" : "Main Content", "type" : "value", "title" : "Quotes Size", "min" : 8, "max" : 72, "target" : "blockquote" }
+@quoteSize: 18px;
+
+// tweak: { "category" : "Main Content", "type" : "value", "title" : "Page Content Width", "min" : 480, "max" : 1280, "target" : ".collection-type-page #pageWrapper", "property" : "width" }
+@pageContentWidth: 800px;
+
+
+/* Blog */
+
+// tweak: { "category" : "Blog", "type" : "font", "title" : "Meta Text", "target" : ".article-meta, .article-meta-top", "showOnlyWhenPresent" : ".collection-type-blog" , "loadAllVariants" : "true" }
+.meta-data-font {
+  font-family: inherit;
+  font-weight: normal;
+  font-style: normal;
+  text-transform: none;
+  line-height: 1.6em;
+  letter-spacing: 0px;
+}
+
+// tweak: { "category" : "Blog", "type" : "value", "title" : "Meta Text Size", "min" : 8, "max" : 72, "target" : ".article-meta, .article-meta-top", "showOnlyWhenPresent" : ".collection-type-blog" }
+@metaSize: 11px;
+
+// tweak: { "category" : "Blog", "type" : "color", "title" : "Meta Text Color", "target" : ".article-meta, .article-meta-top", "showOnlyWhenPresent" : ".collection-type-blog" }
+@metaTextColor: #CFCFCF;
+
+// tweak: { "category" : "Blog", "type" : "dropdown", "title" : "Blog Meta Data", options: [ "Split", "Bottom" ], default: "Bottom", "showOnlyWhenPresent" : ".collection-type-blog" }
+
+// tweak: { "category" : "Blog", "type" : "value", "title" : "Article Spacing", "min" : 0, "max" : 200, "target" : ".hentry .post", "property" : "margin-bottom", "showOnlyWhenPresent" : ".collection-type-blog" }
+@articleSpacing: 100px;
+
+// tweak: { "category" : "Blog", "type" : "value", "title" : "Blog Content Width", "min" : 480, "max" : 1280, "target" : ".hentry .entry-content", "property" : "width", "showOnlyWhenPresent" : ".collection-type-blog" }
+@blogContentWidth: 600px;
+
+// tweak: { "category" : "Blog", "type" : "checkbox", "title" : "Hide Icons", "value" : "false", "showOnlyWhenPresent" : ".collection-type-blog"  }
+
+// tweak: { "category" : "Blog", "type" : "checkbox", "title" : "Hide Author", "value" : "false", "showOnlyWhenPresent" : ".collection-type-blog" }
+
+// tweak: { "category" : "Blog", "type" : "checkbox", "title" : "Hide Tags Categories", "value" : "false", "showOnlyWhenPresent" : ".collection-type-blog" }
+
+// tweak: { "category" : "Blog", "type" : "checkbox", "title" : "Disable Promoted Gallery Color", "active" : "false", "showOnlyWhenPresent" : ".collection-type-blog .promoted-block-gallery .special-content .gallery-block" }
+
+
+/* Footer */
+
+// tweak: { "category" : "Footer", "type" : "value", "title" : "Footer Text Size", "min" : 8, "max" : 72, "target" : "#footerWrapper" }
+@footerSize: 14px;
+
+// tweak: { "category" : "Footer", "type" : "color", "title" : "Footer Text Color", "target" : "#footerWrapper" }
+@footerTextColor: #777777;
+
+// tweak: { "category" : "Footer", "type" : "color", "title" : "Footer Link Color", "target" : "#footerWrapper" }
+@footerLinkColor: #121212;
+
+// tweak: { "category" : "Footer", "type" : "color", "title" : "Footer Link Hover Color", "target" : "#footerWrapper" }
+@footerLinkHoverColor: #595959;
+
+// tweak: { "category" : "Footer", "type" : "dropdown", "title" : "Social Icon Style", options: [ "Normal", "Square", "Round" ], "default" : "Round" }
+
+// tweak: { "category" : "Footer", "type" : "value", "title" : "Social Icon Size", "min" : 16, "max" : 48 }
+@socialIconSize: 18px;
+
+// tweak: { "category" : "Footer", "type" : "color", "title" : "Social Icon Color", "target" : "#sqs-social", "showOnlyWhenPresent" : "body:not(.tweak-template-social-icon-standard-color)" }
+@socialIconColor: #999;
+
+// tweak: { "category" : "Footer", "type" : "color", "title" : "Social Icon Hover Color", "target" : "#sqs-social", "showOnlyWhenPresent" : "body:not(.tweak-template-social-icon-standard-color)" }
+@socialIconHoverColor: #595959;
+
+// tweak: { "category" : "Footer", "title": "tweak-template-social-icon-standard-color", "label": "Standard Color", "type": "checkbox", "active": false, "showOnlyWhenPresent": "#sqs-social", "target": "#sqs-social"}
+
+
+/* Products */
+
+// tweak: { "category" : "Products", "type" : "checkbox", "title" : "Show Products Category Navigation", "label" : "Show Category Navigation", "target" : ".collection-type-products #categoryNav", "showOnlyWhenPresent" : ".collection-type-products", "active" : "false" }
+
+
+/* Gallery */
+
+// tweak: { "category" : "Gallery Styles", "type" : "checkbox", "title" : "Full Width Gallery", "value" : "false", "showOnlyWhenPresent" : ".collection-type-gallery"  }
+
+
+
+// --------------------------------------------
+// SVG Icon in Templates
+// For use in templates where social icons are
+// hard coded.
+// --------------------------------------------
+
+// Wrapper Class for SVG Icons
+@social-icons-wrapper: 'social-links';
+
+// Set Icon Custom Color Name from TWEAK
+@social-icons-color: @socialIconColor;
+
+// Set Class name from Standard Color Checkbox
+@social-icons-standard-color: 'tweak-template-social-icon-standard-color';
+
+// Set Icon Size Class Name from TWEAK
+@social-icons-size-custom: @socialIconSize;
+
+// Set Icon Style Class Names from TWEAK
+@social-icons-style-regular:            'social-icon-style-normal';
+@social-icons-style-circle--knockout:   'social-icon-style-round';
+@social-icons-style-rounded--knockout:  'social-icon-style-square';
+
+// These are not in this template, but need to be here or the mixins
+// in svg-icon-templates.less freak out.
+@social-icons-style-circle--border:     'tweak-template-social-icon-style-circle-border';
+@social-icons-style-circle--solid:      'tweak-template-social-icon-style-circle-solid';
+@social-icons-style-square--border:     'tweak-template-social-icon-style-square-border';
+@social-icons-style-square--knockout:   'tweak-template-social-icon-style-square-knockout';
+@social-icons-style-square--solid:      'tweak-template-social-icon-style-square-solid';
+@social-icons-style-rounded--border:    'tweak-template-social-icon-style-rounded-border';
+@social-icons-style-rounded--solid:     'tweak-template-social-icon-style-rounded-solid';
+
+@import 'svg-icon-templates';
