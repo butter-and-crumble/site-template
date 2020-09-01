@@ -94,6 +94,7 @@
 
 	{squarespace-footers}
 	<squarespace:script src="site.js" combo="true" />
+	<squarespace:script src="pageCustomizer.js" dat=combo="true" />
 
 	{.if template.mobileStylesEnabled}{.or}
 	  <script>

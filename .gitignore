@@ -1,0 +1,10 @@
+sftp-config.json
+scripts/node_modules/*
+scripts/index.js
+scripts/package.json
+scripts/package-lock.json
+scripts/cartRemovalModule.js
+scripts/dashboardModule.js
+scripts/cartEntryModule.js
+scripts/productModifierModule.js
+scripts/_pageCustomizer.js
