@@ -3274,6 +3274,7 @@ module.exports = {
     initModifiers(data){
         try {
             $(document).ready(function(){
+                console.log(data)
                 productTags = data.item.tags
                 if(productTags.includes('scheduler') || productTags.includes('writable')){
                     $('.sqs-add-to-cart-button')[0].classList.add('disabled-cart-button')
