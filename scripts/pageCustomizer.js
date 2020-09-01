@@ -30,7 +30,7 @@ if(!path.startsWith('/cart') || !path.startsWith('/dashboard')){
 
 
 function initalizePage(data){
-    if(path.startsWith('/products/')){
+    if(path.startsWith('/cakes/') || path.startsWith('/sourdough/')){
         productModifier.initModifiers(data)
     }
 
