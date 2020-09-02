@@ -3281,10 +3281,6 @@ module.exports = {
                     cartEntry.listenForXHR(data.item)
                 }
                 if (productTags.includes('scheduler')) {
-                    document.querySelectorAll('.numInput').forEach(function(input){
-                        console.log(input)
-                        input.readOnly = true
-                    })
                     $( '<div class="custom-input-header">Select Pickup Date</div>').insertBefore( ".sqs-add-to-cart-button-wrapper" );
                     $( '<input id="date-picker" class="custom-input" readonly="readonly" placeholder="Date..."></input>').insertBefore( ".sqs-add-to-cart-button-wrapper" );
                     $( '<input id="time-picker" class="custom-input" readonly="readonly" placeholder="Time..."></input>').insertBefore( ".sqs-add-to-cart-button-wrapper" );
