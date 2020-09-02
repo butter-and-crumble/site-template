@@ -3282,8 +3282,8 @@ module.exports = {
                 }
                 if (productTags.includes('scheduler')) {
                     $( '<div class="custom-input-header">Select Pickup Date</div>').insertBefore( ".sqs-add-to-cart-button-wrapper" );
-                    $( '<input id="date-picker" class="custom-input" readyonly="readyonly" placeholder="Date..."></input>').insertBefore( ".sqs-add-to-cart-button-wrapper" );
-                    $( '<input id="time-picker" class="custom-input" readyonly="readyonly" placeholder="Time..."></input>').insertBefore( ".sqs-add-to-cart-button-wrapper" );
+                    $( '<input id="date-picker" class="custom-input" readonly="readonly" placeholder="Date..."></input>').insertBefore( ".sqs-add-to-cart-button-wrapper" );
+                    $( '<input id="time-picker" class="custom-input" readonly="readonly" placeholder="Time..."></input>').insertBefore( ".sqs-add-to-cart-button-wrapper" );
                     setInventoryDateTime(data.item.id)
                     needsDateTime = true
                     toggleCartButtonFunction()
