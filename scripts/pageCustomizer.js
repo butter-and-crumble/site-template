@@ -3146,7 +3146,7 @@ const timeAvailability = [
 
 function setTimePicker(day){
     timeConfig = {
-        disableMobile: true,
+        disableMobile: false,
         enableTime: true,
         noCalendar: true,
         dateFormat: "h:i K",
