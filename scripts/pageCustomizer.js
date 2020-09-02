@@ -3146,6 +3146,9 @@ const timeAvailability = [
 
 function setTimePicker(day){
     timeConfig = {
+        onOpen: function(){
+            console.log("Date Open!")
+        },
         disableMobile: true,
         enableTime: true,
         noCalendar: true,
