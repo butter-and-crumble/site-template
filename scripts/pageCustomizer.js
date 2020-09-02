@@ -3148,8 +3148,8 @@ function setTimePicker(day){
     timeConfig = {
         onOpen: function(){
             console.log("Date Open!")
-            document.getElementsByClassName('flatpickr-hour')[0].readOnly = true
-            document.getElementsByClassName('flatpickr-minute')[0].readOnly = true
+            document.getElementsByClassName('flatpickr-hour')[0].type = 'tel'
+            document.getElementsByClassName('flatpickr-minute')[0].type = 'tel'
         },
         disableMobile: true,
         enableTime: true,
