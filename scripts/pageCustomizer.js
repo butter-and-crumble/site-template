@@ -21,12 +21,14 @@ if(!path.startsWith('/cart')){
     });
 } else {
     if(path.startsWith('/cart')){
+        console.log("In Cart")
         cartRemoval.listenForXHR()
     }
 }
 
 function initalizePage(data){
     if(path.startsWith('/products/')){
+        console.log("In Products")
         productModifier.initModifiers(data)
     }
 
