@@ -27,7 +27,7 @@ if(!path.startsWith('/cart')){
 }
 
 function initalizePage(data){
-    if(path.startsWith('/products/')){
+    if(path.startsWith('/cakes/') || path.startsWith('/sourdough/') ){
         console.log("In Products")
         productModifier.initModifiers(data)
     }
@@ -332,7 +332,7 @@ module.exports = {
                 productTags = data.item.tags
                 if(productTags.includes('scheduler') || productTags.includes('writable')){
                     $('.sqs-add-to-cart-button')[0].classList.add('disabled-cart-button')
-                    cartEntry.listenForXHR(data.item)
+                    cartEntry.listenForXHR()
                 }
                 if (productTags.includes('scheduler')) {
                     $( '<div class="custom-input-header">Select Pickup Date</div>').insertBefore( ".sqs-add-to-cart-button-wrapper" );
