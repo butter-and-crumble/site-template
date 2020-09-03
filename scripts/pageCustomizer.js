@@ -21,14 +21,12 @@ if(!path.startsWith('/cart')){
     });
 } else {
     if(path.startsWith('/cart')){
-        console.log("In Cart")
         cartRemoval.listenForXHR()
     }
 }
 
 function initalizePage(data){
     if(path.startsWith('/cakes/') || path.startsWith('/sourdough/') ){
-        console.log("In Products")
         productModifier.initModifiers(data)
     }
 
@@ -328,7 +326,6 @@ module.exports = {
     initModifiers(data){
         try {
             $(document).ready(function(){
-                console.log(data)
                 productTags = data.item.tags
                 if(productTags.includes('scheduler') || productTags.includes('writable')){
                     $('.sqs-add-to-cart-button')[0].classList.add('disabled-cart-button')
