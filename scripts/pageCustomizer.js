@@ -343,7 +343,7 @@ module.exports = {
 
                 if (productTags.includes('writable')) {
                     $( '<div id="custom-writing-header" class="custom-input-header">Chocolate Writing</div>').insertBefore( ".sqs-add-to-cart-button-wrapper" );
-                    $( '<textarea id="writing-field" class="custom-input"></textarea>').insertBefore( ".sqs-add-to-cart-button-wrapper" );
+                    $( '<textarea id="writing-field" class="custom-input"></textarea>').insertBefore( "#custom-writing-header" );
                     $('#custom-writing-header').hide()
                     $('#writing-field').hide()
                     toggleCartButtonFunction()
