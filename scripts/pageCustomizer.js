@@ -342,8 +342,12 @@ module.exports = {
                 }
 
                 if (productTags.includes('writable')) {
-                    $( '<div id="custom-writing-header" class="custom-input-header">Chocolate Writing</div>').insertBefore( ".sqs-add-to-cart-button-wrapper" );
-                    $( '<textarea id="writing-field" class="custom-input"></textarea>').insertBefore( "#custom-writing-header" );
+                    document.getElementsByClassName('variant-option').forEach(function(e){
+                        if (e.innerText.startsWith('Chocolate Writing')) {
+                            writingSelector = e
+                        }
+                    })
+                    $( '<textarea placeholder="Enter Writing..." id="writing-field" class="custom-input"></textarea>').insertAfter(writingSelector);
                     $('#custom-writing-header').hide()
                     $('#writing-field').hide()
                     toggleCartButtonFunction()
