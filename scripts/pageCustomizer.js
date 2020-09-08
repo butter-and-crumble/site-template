@@ -29,10 +29,6 @@ function initalizePage(data){
     if(path.startsWith('/cakes/') || path.startsWith('/sourdough/') ){
         productModifier.initModifiers(data)
     }
-
-    if(path === '/'){
-    }
-
 }
 
 },{"./cartRemovalModule.js":3,"./productModifierModule.js":4}],2:[function(require,module,exports){
@@ -104,11 +100,6 @@ module.exports = {
         window.XMLHttpRequest.prototype.send = sendReplacement;
     },
 }
-
-
-
-// ID from Entry: 5f5166a7ee9c5051818f00c9
-// Cart Item ID:  5f5166a7ee9c5051818f00c9
 
 },{}],3:[function(require,module,exports){
 var open = window.XMLHttpRequest.prototype.open;
