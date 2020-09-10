@@ -65,7 +65,7 @@ module.exports = {
         writingModifier.value = value
     },
     listenForXHR() {
-        var entriesURL = '/api/commerce/shopping-cart/entries'
+        const entriesURL = '/api/commerce/shopping-cart/entries'
 
         function openReplacement(method, url, async, user, password) {
             this._url = url;
@@ -159,11 +159,9 @@ module.exports = {
 },{}],4:[function(require,module,exports){
 const cartEntry = require('./cartEntryModule.js')
 
+// Scheduling Modification
 var needsDateTime = false;
-var needsWriting = false;
 var hasValidDateTime = false;
-var hasValidWriting = false;
-var blackoutDate;
 
 const timeAvailability = [
     //Sunday
@@ -184,11 +182,6 @@ const timeAvailability = [
 
 function setTimePicker(day){
     timeConfig = {
-        onOpen: function(){
-            console.log("Date Open!")
-            document.getElementsByClassName('flatpickr-hour')[0].type = 'tel'
-            document.getElementsByClassName('flatpickr-minute')[0].type = 'tel'
-        },
         disableMobile: true,
         enableTime: true,
         noCalendar: true,
@@ -237,54 +230,7 @@ function validatePickup(){
     var timeValue = $('#time-picker').val()
     hasValidDateTime = !(dateValue === '' || timeValue === '')
     cartEntry.setDateTimeModifier(needsDateTime,{date: dateValue, time:timeValue})
-    toggleCartButtonFunction()
-}
-
-function trackWritingChange(){
-    $(document).ready(function(){
-        selector = document.getElementsByClassName('variant-select-wrapper')[0].children[0]
-        $(selector).change(function(){
-            selection = $(this).children("option:selected").val()
-            if(selection == "Custom Writing") {
-                needsWriting = true
-                toggleCartButtonFunction()
-                $('#writing-field').change(function(){
-                    validateWriting()
-                })
-                $('#custom-writing-header').show()
-                $('#writing-field').show()
-            } else {
-                needsWriting = false
-                toggleCartButtonFunction()
-                cartEntry.setWritingModifier(needsWriting, null)
-                $('#custom-writing-header').hide()
-                $('#writing-field').hide()
-            }
-        });
-    });
-}
-
-function validateWriting(){
-    var writingValue = $('#writing-field').val()
-    hasValidWriting = writingValue !== ''
-    cartEntry.setWritingModifier(needsWriting, writingValue)
-    toggleCartButtonFunction()
-}
-
-function toggleCartButtonFunction(){
-    if(needsDateTime && needsWriting && hasValidDateTime && hasValidWriting){
-        $('.sqs-add-to-cart-button')[0].classList.remove('disabled-cart-button')
-        $('.sqs-add-to-cart-button-inner').text('Add To Cart')
-    } else if (needsDateTime && !needsWriting && hasValidDateTime){
-        $('.sqs-add-to-cart-button')[0].classList.remove('disabled-cart-button')
-        $('.sqs-add-to-cart-button-inner').text('Add To Cart')
-    } else if (!needsDateTime && needsWriting && hasValidWriting) {
-        $('.sqs-add-to-cart-button')[0].classList.remove('disabled-cart-button')
-        $('.sqs-add-to-cart-button-inner').text('Add To Cart')
-    } else {
-        $('.sqs-add-to-cart-button')[0].classList.add('disabled-cart-button')
-        $('.sqs-add-to-cart-button-inner').text('Complete Details')
-    }
+    toggleSchedulingClass()
 }
 
 async function setInventoryDateTime(itemID){
@@ -312,6 +258,62 @@ async function setInventoryDateTime(itemID){
 }
 
 
+function toggleSchedulingClass(){
+    if(needsDateTime && hasValidDateTime || !needsDateTime){
+        $('.sqs-add-to-cart-button')[0].classList.remove('needs-scheduling')
+        $('.sqs-add-to-cart-button-inner').text('Add To Cart')
+    } else {
+        $('.sqs-add-to-cart-button')[0].classList.add('needs-scheduling')
+        $('.sqs-add-to-cart-button-inner').text('Complete Details')
+    }
+}
+
+
+// Writing Modification
+var needsWriting = false;
+var hasValidWriting = false;
+
+function trackWritingChange(){
+    $(document).ready(function(){
+        selector = document.getElementsByClassName('variant-select-wrapper')[0].children[0]
+        $(selector).change(function(){
+            selection = $(this).children("option:selected").val()
+            if(selection == "Custom Writing") {
+                needsWriting = true
+                toggleWritingClass()
+                $('#writing-field').change(function(){
+                    validateWriting()
+                })
+                $('#custom-writing-header').show()
+                $('#writing-field').show()
+            } else {
+                needsWriting = false
+                toggleWritingClass()
+                cartEntry.setWritingModifier(needsWriting, null)
+                $('#custom-writing-header').hide()
+                $('#writing-field').hide()
+            }
+        });
+    });
+}
+
+function validateWriting(){
+    var writingValue = $('#writing-field').val()
+    hasValidWriting = writingValue !== ''
+    cartEntry.setWritingModifier(needsWriting, writingValue)
+    toggleWritingClass()
+}
+
+function toggleWritingClass(){
+    if(needsWriting && hasValidWriting || !needsWriting){
+        $('.sqs-add-to-cart-button')[0].classList.remove('needs-writing')
+        $('.sqs-add-to-cart-button-inner').text('Add To Cart')
+    } else {
+        $('.sqs-add-to-cart-button')[0].classList.add('needs-writing')
+        $('.sqs-add-to-cart-button-inner').text('Complete Details')
+    }
+}
+
 
 module.exports = {
     initModifiers(data){
@@ -319,10 +321,10 @@ module.exports = {
             $(document).ready(function(){
                 productTags = data.item.tags
                 if(productTags.includes('scheduler') || productTags.includes('writable')){
-                    $('.sqs-add-to-cart-button')[0].classList.add('disabled-cart-button')
-                    cartEntry.listenForXHR()
+                    cartEntry.listenForXHR(data.item)
                 }
                 if (productTags.includes('scheduler')) {
+                    $('.sqs-add-to-cart-button')[0].classList.add('needs-scheduling')
                     $( '<div class="custom-input-header">Select Pickup Date</div>').insertBefore( ".sqs-add-to-cart-button-wrapper" );
                     $( '<input id="date-picker" class="custom-input" readonly="readonly" placeholder="Date..."></input>').insertBefore( ".sqs-add-to-cart-button-wrapper" );
                     $( '<input id="time-picker" class="custom-input" readonly="readonly" placeholder="Time..."></input>').insertBefore( ".sqs-add-to-cart-button-wrapper" );
@@ -333,6 +335,7 @@ module.exports = {
                 }
 
                 if (productTags.includes('writable')) {
+                    $('.sqs-add-to-cart-button')[0].classList.add('needs-writing')
                     document.getElementsByClassName('variant-option').forEach(function(e){
                         if (e.innerText.startsWith('Chocolate Writing')) {
                             writingSelector = e
