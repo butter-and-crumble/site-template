@@ -330,7 +330,7 @@ module.exports = {
                     $( '<input id="time-picker" class="custom-input" readonly="readonly" placeholder="Time..."></input>').insertBefore( ".sqs-add-to-cart-button-wrapper" );
                     setInventoryDateTime(data.item.id)
                     needsDateTime = true
-                    toggleCartButtonFunction()
+                    toggleSchedulingClass()
                     trackDateTimeChange()
                 }
 
@@ -344,7 +344,7 @@ module.exports = {
                     $( '<textarea placeholder="Enter Writing..." id="writing-field" class="custom-input"></textarea>').insertAfter(writingSelector);
                     $('#custom-writing-header').hide()
                     $('#writing-field').hide()
-                    toggleCartButtonFunction()
+                    toggleWritingClass()
                     trackWritingChange()
                 }
             })
