@@ -31,9 +31,13 @@ function initalizePage(data){
     }
 }
 
+
+// TODO: Add pickup and writing info to cart items
+
 },{"./cartRemovalModule.js":3,"./productModifierModule.js":4}],2:[function(require,module,exports){
 var open = window.XMLHttpRequest.prototype.open;
 var send = window.XMLHttpRequest.prototype.send;
+const entryURL = '/api/commerce/shopping-cart/entries'
 
 function storeProductModifiers(cartItem){
     cartItemID = cartItem.id
@@ -44,6 +48,35 @@ function storeProductModifiers(cartItem){
 
     itemModifiers[cartItemID] = module.exports.productModifier
     window.localStorage.setItem('itemModifiers',JSON.stringify(itemModifiers))
+}
+
+function openReplacement(method, url, async, user, password) {
+    this._url = url;
+    return open.apply(this, arguments);
+}
+
+function sendReplacement(data) {
+    if(this.onreadystatechange) {
+        this._onreadystatechange = this.onreadystatechange;
+    }
+
+    this.onreadystatechange = onReadyStateChangeReplacement;
+    return send.apply(this, arguments);
+}
+
+function onReadyStateChangeReplacement() {
+    if(
+        this._url.startsWith(entryURL) &&
+        this.status === 200 &&
+        this.readyState === 4
+    ){
+        cartItem = JSON.parse(this.response).newlyAdded
+        storeProductModifiers(cartItem)
+    }
+
+    if(this._onreadystatechange) {
+        return this._onreadystatechange.apply(this, arguments);
+    }
 }
 
 module.exports = {
@@ -60,36 +93,6 @@ module.exports = {
         }
     },
     listenForXHR() {
-        const entriesURL = '/api/commerce/shopping-cart/entries'
-
-        function openReplacement(method, url, async, user, password) {
-            this._url = url;
-            return open.apply(this, arguments);
-        }
-
-        function sendReplacement(data) {
-            if(this.onreadystatechange) {
-                this._onreadystatechange = this.onreadystatechange;
-            }
-
-            this.onreadystatechange = onReadyStateChangeReplacement;
-            return send.apply(this, arguments);
-        }
-
-        function onReadyStateChangeReplacement() {
-            if(
-                this._url.startsWith(entriesURL) &&
-                this.status === 200 &&
-                this.readyState === 4
-            ){
-                cartItem = JSON.parse(this.response).newlyAdded
-                storeProductModifiers(cartItem)
-            }
-
-            if(this._onreadystatechange) {
-                return this._onreadystatechange.apply(this, arguments);
-            }
-        }
 
         window.XMLHttpRequest.prototype.open = openReplacement;
         window.XMLHttpRequest.prototype.send = sendReplacement;
@@ -99,6 +102,7 @@ module.exports = {
 },{}],3:[function(require,module,exports){
 var open = window.XMLHttpRequest.prototype.open;
 var send = window.XMLHttpRequest.prototype.send;
+const removalURL = '/api/commerce/cart/items/'
 
 function removeProductModifier(itemID){
     itemModifiers = JSON.parse(window.localStorage.getItem('itemModifiers'))
@@ -110,42 +114,40 @@ function removeProductModifier(itemID){
     window.localStorage.setItem('itemModifiers',JSON.stringify(itemModifiers))
 }
 
+function openReplacement(method, url, async, user, password) {
+    this._url = url;
+    this._method = method;
+    return open.apply(this, arguments);
+}
+
+function sendReplacement(data) {
+    if(this.onreadystatechange) {
+        this._onreadystatechange = this.onreadystatechange;
+    }
+
+    this.onreadystatechange = onReadyStateChangeReplacement;
+    return send.apply(this, arguments);
+}
+
+function onReadyStateChangeReplacement() {
+    if(
+        this._url.startsWith(removalURL) &&
+        this.status === 200 &&
+        this.readyState === 4 &&
+        this._method === "DELETE"
+    ){
+        cartItemID = this._url.replace(removalURL,'')
+        removeProductModifier(cartItemID)
+    }
+
+    if(this._onreadystatechange) {
+        return this._onreadystatechange.apply(this, arguments);
+    }
+}
+
 module.exports = {
 
     listenForXHR() {
-        var entriesURL = '/api/commerce/cart/items/'
-
-        function openReplacement(method, url, async, user, password) {
-            this._url = url;
-            this._method = method;
-            return open.apply(this, arguments);
-        }
-
-        function sendReplacement(data) {
-            if(this.onreadystatechange) {
-                this._onreadystatechange = this.onreadystatechange;
-            }
-
-            this.onreadystatechange = onReadyStateChangeReplacement;
-            return send.apply(this, arguments);
-        }
-
-        function onReadyStateChangeReplacement() {
-            if(
-                this._url.startsWith(entriesURL) &&
-                this.status === 200 &&
-                this.readyState === 4 &&
-                this._method === "DELETE"
-            ){
-                cartItemID = this._url.replace(entriesURL,'')
-                removeProductModifier(cartItemID)
-            }
-
-            if(this._onreadystatechange) {
-                return this._onreadystatechange.apply(this, arguments);
-            }
-        }
-
         window.XMLHttpRequest.prototype.open = openReplacement;
         window.XMLHttpRequest.prototype.send = sendReplacement;
     },
@@ -326,7 +328,6 @@ function toggleWritingClass(){
         $('.sqs-add-to-cart-button-inner').text('Complete Details')
     }
 }
-
 
 module.exports = {
     // Initialize product modifiers based on scheduler and writinng tags
