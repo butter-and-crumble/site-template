@@ -5,16 +5,19 @@ const cartRemoval = require('./cartRemovalModule.js')
 var href = window.location.href
 var path = window.location.pathname
 
+// Initialize item modifier storage if undefined
 if (window.localStorage.getItem('itemModifiers') === null) {
     window.localStorage.setItem('itemModifiers',JSON.stringify({}))
 }
 
+// Retrieve JSON-T data from current page
 if(window.location.href.endsWith('/')){
     var url = href + '?format=json-pretty'
 } else {
     var url = href + '/?format=json-pretty'
 }
 
+// Handle cart page JSON-T rejection, otherwise, initialize regularly
 if(!path.startsWith('/cart')){
     $.getJSON( url, function( data ) {
         initalizePage(data);
@@ -25,12 +28,12 @@ if(!path.startsWith('/cart')){
     }
 }
 
+// Initialize specific product pages
 function initalizePage(data){
     if(path.startsWith('/cakes/') || path.startsWith('/sourdough/') ){
         productModifier.initModifiers(data)
     }
 }
-
 
 // TODO: Add pickup and writing info to cart items
 
@@ -39,6 +42,7 @@ var open = window.XMLHttpRequest.prototype.open;
 var send = window.XMLHttpRequest.prototype.send;
 const entryURL = '/api/commerce/shopping-cart/entries'
 
+// Store product modifiers from date, time, and writing in local object
 function storeProductModifiers(cartItem){
     cartItemID = cartItem.id
     itemModifiers = JSON.parse(window.localStorage.getItem('itemModifiers'))
@@ -50,11 +54,13 @@ function storeProductModifiers(cartItem){
     window.localStorage.setItem('itemModifiers',JSON.stringify(itemModifiers))
 }
 
+// Retrieve URL from XHR, to be used for cart item identification
 function openReplacement(method, url, async, user, password) {
     this._url = url;
     return open.apply(this, arguments);
 }
 
+// Repalace XHR send with custom ready state change
 function sendReplacement(data) {
     if(this.onreadystatechange) {
         this._onreadystatechange = this.onreadystatechange;
@@ -64,6 +70,7 @@ function sendReplacement(data) {
     return send.apply(this, arguments);
 }
 
+// Store cart item info on final ready state
 function onReadyStateChangeReplacement() {
     if(
         this._url.startsWith(entryURL) &&
@@ -93,7 +100,6 @@ module.exports = {
         }
     },
     listenForXHR() {
-
         window.XMLHttpRequest.prototype.open = openReplacement;
         window.XMLHttpRequest.prototype.send = sendReplacement;
     },
@@ -104,6 +110,7 @@ var open = window.XMLHttpRequest.prototype.open;
 var send = window.XMLHttpRequest.prototype.send;
 const removalURL = '/api/commerce/cart/items/'
 
+// Remove product modifiers of specific cart item, based on cart item ID
 function removeProductModifier(itemID){
     itemModifiers = JSON.parse(window.localStorage.getItem('itemModifiers'))
 
@@ -114,12 +121,14 @@ function removeProductModifier(itemID){
     window.localStorage.setItem('itemModifiers',JSON.stringify(itemModifiers))
 }
 
+// Retrieve URL and method from XHR, to be used for cart item identification
 function openReplacement(method, url, async, user, password) {
     this._url = url;
     this._method = method;
     return open.apply(this, arguments);
 }
 
+// Repalace XHR send with custom ready state change
 function sendReplacement(data) {
     if(this.onreadystatechange) {
         this._onreadystatechange = this.onreadystatechange;
@@ -129,6 +138,7 @@ function sendReplacement(data) {
     return send.apply(this, arguments);
 }
 
+// Send cart item id of object to be removed
 function onReadyStateChangeReplacement() {
     if(
         this._url.startsWith(removalURL) &&
@@ -146,7 +156,6 @@ function onReadyStateChangeReplacement() {
 }
 
 module.exports = {
-
     listenForXHR() {
         window.XMLHttpRequest.prototype.open = openReplacement;
         window.XMLHttpRequest.prototype.send = sendReplacement;
