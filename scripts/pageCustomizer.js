@@ -34,35 +34,30 @@ function initalizePage(data){
 },{"./cartRemovalModule.js":3,"./productModifierModule.js":4}],2:[function(require,module,exports){
 var open = window.XMLHttpRequest.prototype.open;
 var send = window.XMLHttpRequest.prototype.send;
-var dateTimeModifier = { needed:false, value:{} };
-var writingModifier = { needed:false, value:{} };
-productModifier = { dateTime:null, wrting:null };
 
 function storeProductModifiers(cartItem){
     cartItemID = cartItem.id
     itemModifiers = JSON.parse(window.localStorage.getItem('itemModifiers'))
 
-    productModifier.item = cartItem.itemId
-    productModifier.sku = cartItem.chosenVariant.sku
+    module.exports.productModifier.item = cartItem.itemId
+    module.exports.productModifier.sku = cartItem.chosenVariant.sku
 
-    if(dateTimeModifier.needed){
-        productModifier.dateTime = dateTimeModifier.value
-    }
-    if(writingModifier.needed){
-        productModifier.wrting = writingModifier.value
-    }
-    itemModifiers[cartItemID] = productModifier
+    itemModifiers[cartItemID] = module.exports.productModifier
     window.localStorage.setItem('itemModifiers',JSON.stringify(itemModifiers))
 }
 
 module.exports = {
-    setDateTimeModifier(needed,value){
-        dateTimeModifier.needed = needed
-        dateTimeModifier.value = value
-    },
-    setWritingModifier(needed,value){
-        writingModifier.needed = needed
-        writingModifier.value = value
+    productModifier: {
+        item: null,
+        sku: null,
+        dateTime: {
+            needed: false,
+            value: null,
+        },
+        writing: {
+            needed: false,
+            value: null,
+        }
     },
     listenForXHR() {
         const entriesURL = '/api/commerce/shopping-cart/entries'
@@ -159,10 +154,11 @@ module.exports = {
 },{}],4:[function(require,module,exports){
 const cartEntry = require('./cartEntryModule.js')
 
-// Scheduling Modification
+//// Scheduling Modification
 var needsDateTime = false;
 var hasValidDateTime = false;
 
+// Pickup time availability by day of the week
 const timeAvailability = [
     //Sunday
     {},
@@ -180,6 +176,7 @@ const timeAvailability = [
     {min:"8:00", max:"11:00"},
 ]
 
+// Create time flatpickr with time availability
 function setTimePicker(day){
     timeConfig = {
         disableMobile: true,
@@ -193,6 +190,7 @@ function setTimePicker(day){
     flatpickr("#time-picker", timeConfig);
 }
 
+// Create date flatpickr with blackout dates from admin dashboard
 function createDateConfig(blackoutDate){
     return {
         onChange: function(selectedDates, dateStr, instance) {
@@ -214,6 +212,7 @@ function createDateConfig(blackoutDate){
     }
 }
 
+// Trigger validation event on date or time change
 function trackDateTimeChange(){
     $(document).ready(function(){
         $('#date-picker').change(function(){
@@ -225,14 +224,22 @@ function trackDateTimeChange(){
     })
 }
 
+// Ensure date and time are non-empty and push changes to cartEntry
+// Toggles cart button class based on validation
 function validatePickup(){
     var dateValue = $('#date-picker').val()
     var timeValue = $('#time-picker').val()
     hasValidDateTime = !(dateValue === '' || timeValue === '')
-    cartEntry.setDateTimeModifier(needsDateTime,{date: dateValue, time:timeValue})
+    cartEntry.productModifier.dateTime.needed = needsDateTime
+    cartEntry.productModifier.dateTime.value = {
+        needed: needsDateTime,
+        value: {date: dateValue, time:timeValue}
+    }
     toggleSchedulingClass()
 }
 
+// Get inventory blackout date from item id
+// If no blackout date, use current day plus one
 async function setInventoryDateTime(itemID){
     try {
         var db = firebase.firestore();
@@ -257,7 +264,7 @@ async function setInventoryDateTime(itemID){
     }
 }
 
-
+// Change add to cart button styling based on scheduling input validation
 function toggleSchedulingClass(){
     if(needsDateTime && hasValidDateTime || !needsDateTime){
         $('.sqs-add-to-cart-button')[0].classList.remove('needs-scheduling')
@@ -268,11 +275,12 @@ function toggleSchedulingClass(){
     }
 }
 
-
-// Writing Modification
+//// Writing Modification
 var needsWriting = false;
 var hasValidWriting = false;
 
+// Trigger validation event on writing field changes
+// This is based on writing option being selected
 function trackWritingChange(){
     $(document).ready(function(){
         selector = document.getElementsByClassName('variant-select-wrapper')[0].children[0]
@@ -297,13 +305,17 @@ function trackWritingChange(){
     });
 }
 
+// Ensure writing field is non-empty and push changes to cartEntry
+// Toggles cart button class based on validation
 function validateWriting(){
     var writingValue = $('#writing-field').val()
     hasValidWriting = writingValue !== ''
-    cartEntry.setWritingModifier(needsWriting, writingValue)
+    cartEntry.productModifier.writing.needed = needsWriting
+    cartEntry.productModifier.writing.value = writingValue
     toggleWritingClass()
 }
 
+// Change add to cart button styling based on writing input validation
 function toggleWritingClass(){
     if(needsWriting && hasValidWriting || !needsWriting){
         $('.sqs-add-to-cart-button')[0].classList.remove('needs-writing')
@@ -316,6 +328,7 @@ function toggleWritingClass(){
 
 
 module.exports = {
+    // Initialize product modifiers based on scheduler and writinng tags
     initModifiers(data){
         try {
             $(document).ready(function(){
@@ -323,6 +336,8 @@ module.exports = {
                 if(productTags.includes('scheduler') || productTags.includes('writable')){
                     cartEntry.listenForXHR(data.item)
                 }
+                // If product has scheduler tag, add date and time flatpickr
+                // pull blackout date from firebase
                 if (productTags.includes('scheduler')) {
                     $('.sqs-add-to-cart-button')[0].classList.add('needs-scheduling')
                     $( '<div class="custom-input-header">Select Pickup Date</div>').insertBefore( ".sqs-add-to-cart-button-wrapper" );
@@ -333,7 +348,7 @@ module.exports = {
                     toggleSchedulingClass()
                     trackDateTimeChange()
                 }
-
+                // If product has writing tag, add writing text field
                 if (productTags.includes('writable')) {
                     $('.sqs-add-to-cart-button')[0].classList.add('needs-writing')
                     document.getElementsByClassName('variant-option').forEach(function(e){
