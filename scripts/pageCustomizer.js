@@ -35,7 +35,9 @@ function initalizePage(data){
     }
 }
 
-// TODO: Add pickup and writing info to cart items
+// TODO:
+// ADD: Pickup and writing info to cart items
+// ADD: More form validation for add to cart button
 
 },{"./cartRemovalModule.js":3,"./productModifierModule.js":4}],2:[function(require,module,exports){
 var open = window.XMLHttpRequest.prototype.open;
