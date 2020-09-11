@@ -232,8 +232,8 @@ function validatePickup(){
     hasValidDateTime = !(dateValue === '' || timeValue === '')
     cartEntry.productModifier.dateTime.needed = needsDateTime
     cartEntry.productModifier.dateTime.value = {
-        needed: needsDateTime,
-        value: {date: dateValue, time:timeValue}
+        date: dateValue,
+        time: timeValue
     }
     toggleSchedulingClass()
 }
