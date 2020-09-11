@@ -297,7 +297,8 @@ function trackWritingChange(){
             } else {
                 needsWriting = false
                 toggleWritingClass()
-                cartEntry.setWritingModifier(needsWriting, null)
+                cartEntry.productModifier.writing.needed = needsWriting
+                cartEntry.productModifier.writing.value = null
                 $('#custom-writing-header').hide()
                 $('#writing-field').hide()
             }
