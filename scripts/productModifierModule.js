@@ -51,10 +51,10 @@ function createDateConfig(blackout){
         disableMobile: true,
         "disable": [
             function(date) {
-
                 return (
                     date.getDay() === 0 ||
-                    (date > blackoutStart && date < blackoutEnd)
+                    (date > blackoutStart && date < blackoutEnd) ||
+                    date < new Date().addDays(-1)
                 )
             }
         ],
@@ -63,6 +63,7 @@ function createDateConfig(blackout){
         }
     }
 }
+
 
 // Trigger validation event on date or time change
 function trackDateTimeChange(){
@@ -102,9 +103,11 @@ async function setInventoryDateTime(itemID){
                 dateConfig = createDateConfig(doc.data())
                 flatpickr("#date-picker", dateConfig);
             } else {
-                cutOff = new Date()
-                cutOff.setDate(cutOff.getDate() + 1);
-                dateConfig = createDateConfig(cutOff)
+                noBlackout = {
+                    start: new Date().addDays(-1).getTime(),
+                    end: new Date().addDays(-1).getTime()
+                }
+                dateConfig = createDateConfig(noBlackout)
                 flatpickr("#date-picker", dateConfig);
 
             }
