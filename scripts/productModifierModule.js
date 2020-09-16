@@ -38,8 +38,8 @@ function setTimePicker(day){
 
 // Create date flatpickr with blackout dates from admin dashboard
 function createDateConfig(blackout){
-    const blackoutStart = blackout.start.seconds * 1000
-    const blackoutEnd = blackout.end.seconds * 1000
+    const blackoutStart = new Date(blackout.start.seconds * 1000)
+    const blackoutEnd = new Date(blackout.end.seconds * 1000)
     return {
         onChange: function(selectedDates, dateStr, instance) {
             $('#time-picker').val('')
@@ -53,7 +53,7 @@ function createDateConfig(blackout){
             function(date) {
                 return (
                     date.getDay() === 0 ||
-                    (date > blackoutStart && date < blackoutEnd) ||
+                    (date >= blackoutStart && date <= blackoutEnd) ||
                     date < new Date().addDays(-1)
                 )
             }
