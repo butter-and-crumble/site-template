@@ -37,7 +37,9 @@ function setTimePicker(day){
 }
 
 // Create date flatpickr with blackout dates from admin dashboard
-function createDateConfig(blackoutDate){
+function createDateConfig(blackout){
+    const blackoutStart = blackout.start.seconds * 1000
+    const blackoutEnd = blackout.end.seconds * 1000
     return {
         onChange: function(selectedDates, dateStr, instance) {
             $('#time-picker').val('')
@@ -49,7 +51,11 @@ function createDateConfig(blackoutDate){
         disableMobile: true,
         "disable": [
             function(date) {
-                return (date.getDay() === 0 || date < blackoutDate);
+
+                return (
+                    date.getDay() === 0 ||
+                    (date > blackoutStart && date < blackoutEnd)
+                )
             }
         ],
         "locale": {
@@ -93,7 +99,7 @@ async function setInventoryDateTime(itemID){
 
         docRef.get().then(function(doc) {
             if (doc.exists) {
-                dateConfig = createDateConfig(doc.data().date.toDate())
+                dateConfig = createDateConfig(doc.data())
                 flatpickr("#date-picker", dateConfig);
             } else {
                 cutOff = new Date()
