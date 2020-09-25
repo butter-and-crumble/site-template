@@ -1,5 +1,6 @@
 const productModifier = require('./productModifierModule.js')
 const cartRemoval = require('./cartRemovalModule.js')
+const cartModifier = require('./cartModifierModule.js')
 
 var href = window.location.href
 var path = window.location.pathname
@@ -23,6 +24,7 @@ if(!path.startsWith('/cart')){
     });
 } else {
     if(path.startsWith('/cart')){
+        // cartModifier.listenForXHR()
         cartRemoval.listenForXHR()
     }
 }
