@@ -269,9 +269,7 @@ function createDateConfig(blackout){
     return {
         onChange: function(selectedDates, dateStr, instance) {
             $('#time-picker').val('')
-            if (selectedDates.length > 0) {
-                setTimePicker(selectedDates[0].getDay())
-            }
+            setTimePicker(selectedDates[0].getDay())
         },
         altInput: true,
         altFormat: "F j, Y",
