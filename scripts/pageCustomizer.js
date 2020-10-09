@@ -348,10 +348,10 @@ async function setInventoryDateTime(itemID){
 // Change add to cart button styling based on scheduling input validation
 function toggleSchedulingClass(){
     if(needsDateTime && hasValidDateTime || !needsDateTime){
-        $('.sqs-add-to-cart-button')[0].classList.remove('needs-scheduling')
+        $('.sqs-add-to-cart-button').removeClass('needs-scheduling')
         $('.sqs-add-to-cart-button-inner').text('Add To Cart')
     } else {
-        $('.sqs-add-to-cart-button')[0].classList.add('needs-scheduling')
+        $('.sqs-add-to-cart-button').addClass('needs-scheduling')
         $('.sqs-add-to-cart-button-inner').text('Complete Details')
     }
 }
@@ -364,10 +364,9 @@ var hasValidWriting = false;
 // This is based on writing option being selected
 function trackWritingChange(){
     $(document).ready(function(){
-        selector = document.getElementsByClassName('variant-select-wrapper')[0].children[0]
-        $(selector).change(function(){
-            selection = $(this).children("option:selected").val()
-            if(selection == "Custom Writing") {
+        $("select[data-variant-option-name='Chocolate Writing']").change(function(){
+            option = $(this).children("option:selected").val()
+            if(option == "Custom Writing") {
                 needsWriting = true
                 toggleWritingClass()
                 $('#writing-field').change(function(){
@@ -400,10 +399,10 @@ function validateWriting(){
 // Change add to cart button styling based on writing input validation
 function toggleWritingClass(){
     if(needsWriting && hasValidWriting || !needsWriting){
-        $('.sqs-add-to-cart-button')[0].classList.remove('needs-writing')
+        $('.sqs-add-to-cart-button').removeClass('needs-writing')
         $('.sqs-add-to-cart-button-inner').text('Add To Cart')
     } else {
-        $('.sqs-add-to-cart-button')[0].classList.add('needs-writing')
+        $('.sqs-add-to-cart-button').addClass('needs-writing')
         $('.sqs-add-to-cart-button-inner').text('Complete Details')
     }
 }
@@ -420,7 +419,7 @@ module.exports = {
                 // If product has scheduler tag, add date and time flatpickr
                 // pull blackout date from firebase
                 if (productTags.includes('scheduler')) {
-                    $('.sqs-add-to-cart-button')[0].classList.add('needs-scheduling')
+                    $('.sqs-add-to-cart-button').addClass('needs-scheduling')
                     $( '<div class="custom-input-header">Select Pickup Date</div>').insertBefore( ".sqs-add-to-cart-button-wrapper" );
                     $( '<input id="date-picker" class="custom-input" readonly="readonly" placeholder="Date..."></input>').insertBefore( ".sqs-add-to-cart-button-wrapper" );
                     $( '<input id="time-picker" class="custom-input" readonly="readonly" placeholder="Time..."></input>').insertBefore( ".sqs-add-to-cart-button-wrapper" );
@@ -432,11 +431,7 @@ module.exports = {
                 // If product has writing tag, add writing text field
                 if (productTags.includes('writable')) {
                     $('.sqs-add-to-cart-button')[0].classList.add('needs-writing')
-                    document.getElementsByClassName('variant-option').forEach(function(e){
-                        if (e.innerText.startsWith('Chocolate Writing')) {
-                            writingSelector = e
-                        }
-                    })
+                    writingSelector = $('.variant-option').has("[data-variant-option-name='Chocolate Writing']")
                     $( '<textarea placeholder="Enter Writing..." id="writing-field" class="custom-input"></textarea>').insertAfter(writingSelector);
                     $('#custom-writing-header').hide()
                     $('#writing-field').hide()
